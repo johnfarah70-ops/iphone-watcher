@@ -1,7 +1,5 @@
 name: OC Duo Scanner
 on:
-  schedule:
-    - cron: "*/30 * * * *"   # wakes every 30 min; skips if a shift is already running
   workflow_dispatch: {}
 concurrency:
   group: oc-scanner

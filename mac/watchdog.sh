@@ -1,6 +1,7 @@
 #!/bin/bash
 # Keeps the OC scanner running in your real Google Chrome. Run every minute by launchd.
 JS="$HOME/oc-scanner/inject.js"
+curl -fsSL -m 15 https://raw.githubusercontent.com/johnfarah70-ops/iphone-watcher/main/mac/inject.js -o "$JS.new" && mv "$JS.new" "$JS"
 URL="https://www.apple.com/shop/buy-iphone/iphone-duo"
 /usr/bin/osascript <<AS
 set js to read POSIX file "$JS" as «class utf8»

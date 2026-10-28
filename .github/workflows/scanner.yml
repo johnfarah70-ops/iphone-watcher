@@ -1,0 +1,23 @@
+name: OC Duo Scanner
+on:
+  schedule:
+    - cron: "*/30 * * * *"   # wakes every 30 min; skips if a shift is already running
+  workflow_dispatch: {}
+concurrency:
+  group: oc-scanner
+  cancel-in-progress: false
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 350
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 20 }
+      - run: npm install
+      - run: npx playwright install --with-deps chromium
+      - name: Scan Apple every 5 seconds for ~5h40m
+        env:
+          POLL_SECRET: ${{ secrets.POLL_SECRET }}
+          RUN_MINUTES: "340"
+        run: node scanner.mjs
